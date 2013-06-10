@@ -120,8 +120,9 @@ function cache_set($cid, $data, $table = 'cache', $expire = CACHE_PERMANENT, $he
  */
 function cache_clear_all($cid = NULL, $table = NULL, $wildcard = FALSE) {
 	$f = cache_path(null, null);
-	foreach(glob(dirname($f).'/*/*.cache') as $del)
+	foreach(glob(dirname(dirname($f)).'/*/*.cache') as $del) {
 		@unlink($del);
+	}
 }
 
 function cache_path($cid, $table) {
@@ -133,3 +134,4 @@ function cache_path($cid, $table) {
 	if (!is_dir($dd)) @mkdir($dd);
 	return $dd.'/'.substr(md5($table.$cid),2,2).'.cache';
 }
+
